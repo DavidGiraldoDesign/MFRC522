@@ -28,22 +28,30 @@ void loop() {
   // put your main code here, to run repeatedly:
 
   if (cardSensor.PICC_IsNewCardPresent()) {
-    Serial.println("Is near");
+    //Serial.println("Is near");
     if (cardSensor.PICC_ReadCardSerial()) {
-      Serial.println("Can read it");
+      //Serial.println("Can read it");
       cardSensor.MIFARE_Read(BLOCK_ADDRESS_CARD, 16, 16);
-      Serial.print("cardSensor.uid.size- ");
-      Serial.println(cardSensor.uid.size);
-      Serial.print("cardSensor.uid.uidByte- ");
-      for (byte i = 0; i < cardSensor.uid.size; i++) {
-        Serial.print(cardSensor.uid.uidByte[i] < 0x10 ? " 0" : " ");
-        currentCardUID = currentCardUID + String(cardSensor.uid.uidByte[i], HEX);
-      }
-      Serial.print("currentCardUID is: ");
-      Serial.println(currentCardUID);
+      //Serial.print("cardSensor.uid.size- ");
+      //Serial.println(cardSensor.uid.size);
+      //Serial.print("cardSensor.uid.uidByte- ");
 
+      for (byte i = 0; i < cardSensor.uid.size; i++) {
+        //  Serial.print(cardSensor.uid.uidByte[i] < 0x10 ? " 0" : "");
+        //currentCardUID = currentCardUID + String(cardSensor.uid.uidByte[i], HEX);
+        //Serial.print();
+        //currentCardUID = currentCardUID + (cardSensor.uid.uidByte[i] < 0x10 ? "0" : String(cardSensor.uid.uidByte[i], HEX));
+        //Serial.print(cardSensor.uid.uidByte[i] < 0x10 ? " 0" : " ");
+        currentCardUID = currentCardUID + (cardSensor.uid.uidByte[i] < 0x10 ? "0" : "");
+        //Serial.print(cardSensor.uid.uidByte[i], HEX);
+        currentCardUID = currentCardUID + String(cardSensor.uid.uidByte[i], HEX);
+        delay(10);
+      }
+      //Serial.print("currentCardUID is: ");
+      Serial.print(currentCardUID);
+      delay(500);
+      currentCardUID = "";
     }
-    delay(500);
   } else {
     currentCardUID = "";
   }
