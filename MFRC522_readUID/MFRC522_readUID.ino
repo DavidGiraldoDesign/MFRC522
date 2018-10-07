@@ -49,11 +49,15 @@ void loop() {
       }
       //Serial.print("currentCardUID is: ");
       Serial.print(currentCardUID);
-      delay(500);
+      delay(10);
       currentCardUID = "";
     }
-  } else {
-    currentCardUID = "";
   }
+  
+  /*else {
+    currentCardUID = "";
+    Serial.print("PC-false-");
+    delay(500);
+  }*/
 
 }
