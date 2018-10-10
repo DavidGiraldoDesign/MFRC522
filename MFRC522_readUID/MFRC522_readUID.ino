@@ -14,7 +14,7 @@ const byte BLOCK_ADDRESS_CARD = 1;
 
 String currentCardUID = "";
 /*---------------------------------------*/
-
+int isPresentLED = 8;
 
 MFRC522 cardSensor(SS_PIN, RST_PIN);
 
@@ -22,14 +22,14 @@ void setup() {
   Serial.begin(9600);
   SPI.begin();
   cardSensor.PCD_Init();
-  pinMode(6, OUTPUT);
+  pinMode(isPresentLED, OUTPUT);
 }
 
 
 void loop() {
   if (cardSensor.PICC_IsNewCardPresent()) {
     if (cardSensor.PICC_ReadCardSerial()) {
-      digitalWrite(6, HIGH);
+      digitalWrite(isPresentLED, HIGH);
 
       cardSensor.MIFARE_Read(BLOCK_ADDRESS_CARD, 16, 16);
 
@@ -43,10 +43,10 @@ void loop() {
       delay(10);
       currentCardUID = "";
     } else {
-      digitalWrite(6, LOW);
+      digitalWrite(isPresentLED, LOW);
     }
   } else {
-    digitalWrite(6, LOW);
+    digitalWrite(isPresentLED, LOW);
   }
 
 }
